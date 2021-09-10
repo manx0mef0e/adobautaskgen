@@ -1,4 +1,4 @@
-function New-AdoBauTask {
+function Add-AdoBauTask {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]

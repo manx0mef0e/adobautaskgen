@@ -1,5 +1,5 @@
 function Set-AdoConnection {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory)]
         [string]
