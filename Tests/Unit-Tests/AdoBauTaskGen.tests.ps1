@@ -1,5 +1,7 @@
-$BuildVarModuleFilePath = Join-Path -Path ($PSScriptRoot -replace "Tests.+") -ChildPath "Helpers"
-$BuildVarModuleFilePath = Join-Path -Path $BuildVarModuleFilePath -ChildPath "Set-TestHelpersEnvVars.ps1"
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Suppress false positives in BeforeAll scriptblock')]
+param()
+
+$BuildVarModuleFilePath = Join-Path -Path ($PSScriptRoot -replace "Tests.+") -ChildPath "Helpers" -AdditionalChildPath "Set-TestHelpersEnvVars.ps1"
 . $BuildVarModuleFilePath -Path $PSScriptRoot
 
 Describe "$ENV:BHProjectName Manifest" {
