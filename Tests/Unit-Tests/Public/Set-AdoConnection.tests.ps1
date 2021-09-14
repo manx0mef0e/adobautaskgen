@@ -52,4 +52,21 @@ Describe "$ENV:THFunctionName" {
         }
     }
 
+    Context "Core functionality" {
+        BeforeEach {
+            Mock Set-VSTeamAccount
+            Mock Set-VSTeamDefaultProject
+
+            Set-AdoConnection -Url "fakeurl" -Project "fakeproject" -PersonalAccessToken "fakepat"
+        }
+
+        It "Calls Set-VSTeamAccount" {
+            Should -Invoke -CommandName Set-VSTeamAccount -Times 1
+        }
+
+        It "Calls Set-VSTeamDefaultProject" {
+            Should -Invoke -CommandName Set-VSTeamDefaultProject -Times 1
+        }
+    }
 }
+
