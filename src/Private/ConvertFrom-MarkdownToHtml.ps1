@@ -17,5 +17,7 @@ function ConvertFrom-MarkdownToHtml {
     if ($Response.StatusCode -eq 200) {
         return $Response.Content
     }
-    # TODO: What happens when we don't get the 200 response?
+    else {
+        return $Markdown
+    }
 }
