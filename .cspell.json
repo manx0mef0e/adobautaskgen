@@ -3,17 +3,20 @@
     "allowCompoundWords": true,
     "language": "en-GB",
     "dictionaries": [
-    "en-GB",
-    "companies"
+        "en-GB",
+        "companies"
     ],
     "ignorePaths": [
-    ".gitignore",
-    "**/.devcontainer/**",
-    "**/.git/**",
-    "**/.husky/**",
-    "**/.vscode/**",
-    "**/node_modules/**",
-    "**/vscode-extension/**",
-    "package-lock.json"
+        ".gitignore",
+        "**/.devcontainer/**",
+        "**/.git/**",
+        "**/.husky/**",
+        "**/.vscode/**",
+        "**/node_modules/**",
+        "**/vscode-extension/**",
+        "package-lock.json"
+    ],
+    "words": [
+        "adobautaskgen"
     ]
 }
