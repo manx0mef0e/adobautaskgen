@@ -1,23 +1,27 @@
 function Get-FullTitle {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Frequency")]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true, ParameterSetName = "Frequency")]
+        [Parameter(Mandatory = $true, ParameterSetName = "Specific")]
         [string]
         $Title,
 
-        [Parameter(Mandatory)]
-        [ValidateSet("Daily","Weekly","Monthly","Quarterly","Half-Yearly","Yearly","Specific")]
+        [Parameter(Mandatory = $true, ParameterSetName = "Frequency")]
+        [ValidateSet("Daily","Weekly","Monthly","Quarterly","Half-Yearly","Yearly")]
         [string]
         $Frequency,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true, ParameterSetName = "Specific")]
         [int]
         $RunDate
     )
 
     $Today = Get-Date
 
-    if ($Frequency -eq "Daily") {
+    if ($RunDate) {
+        $CompleteTitle ="$RunDate $(Get-Date $Today -UFormat %b): $Title"
+    }
+    elseif ($Frequency -eq "Daily") {
         $CompleteTitle = "$($Today.DayOfWeek): $Title"
     }
     elseif ($Frequency -eq "Weekly") {
@@ -34,9 +38,6 @@ function Get-FullTitle {
     }
     elseif ($Frequency -eq "Yearly") {
         $CompleteTitle ="$($Today.Year): $Title"
-    }
-    elseif ($Frequency -eq "Specific" -and $RunDate) {
-        $CompleteTitle ="$RunDate $(Get-Date $Today -UFormat %b): $Title"
     }
     else {
         throw "Cannot create title based on frequency"
