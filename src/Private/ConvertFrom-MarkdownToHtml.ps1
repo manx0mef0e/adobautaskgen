@@ -7,9 +7,11 @@ function ConvertFrom-MarkdownToHtml {
     )
 
     $Uri = "https://api.github.com/markdown"
-    $ApiRequestBody = New-Object -TypeName PSObject
-    $ApiRequestBody | Add-Member -MemberType NoteProperty -Name text -Value $Markdown
-    $ApiRequestBody | Add-Member -MemberType NoteProperty -Name mode -Value "markdown"
+
+    $ApiRequestBody = @{
+        text = $Markdown
+        mode = "markdown"
+    }
 
     $Response = Invoke-WebRequest -Uri $Uri -Method Post -Body ($ApiRequestBody | ConvertTo-Json)
 
