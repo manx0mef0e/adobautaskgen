@@ -13,7 +13,7 @@ function Set-AdoConnection {
         [string]
         $PersonalAccessToken
     )
-    
+
     Set-VSTeamAccount -Account $Url -PersonalAccessToken $PersonalAccessToken
     Set-VSTeamDefaultProject -Project $Project
 }
