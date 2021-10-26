@@ -1,13 +1,13 @@
 [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Suppress false positives in BeforeAll scriptblock')]
 param()
 
-$BuildVarModuleFilePath = Join-Path -Path ($PSScriptRoot -replace "Tests.+") -ChildPath "Helpers" -AdditionalChildPath "Set-TestHelpersEnvVars.ps1"
-. $BuildVarModuleFilePath -Path $PSCommandPath
+Set-BuildEnvironment -Path ($PSScriptRoot -replace "Tests.+") -Force
 
-Describe "$ENV:THFunctionName" {
+Describe "Get-FullTitle" {
     BeforeAll {
-        $FunctionName = $ENV:THFunctionName
-        . $ENV:THFunctionPath
+        $FunctionName = "Get-FullTitle"
+        $FunctionPath = $PSCommandPath -replace ".+Unit-Tests", $ENV:BHPSModulePath -replace "\.tests"
+        . $FunctionPath
 
         $FuncDependancies = @{
             Private = @()
@@ -24,7 +24,6 @@ Describe "$ENV:THFunctionName" {
         }
     }
     Context "Parameters" {
-    <#
         BeforeAll {
             $Function = Get-Command $FunctionName
         }
@@ -34,13 +33,16 @@ Describe "$ENV:THFunctionName" {
             $ParameterInfo.Count - 11 | Should -Be 3
         }
 
-        It "Has a mandatory switch 'Enable' parameter" {
-            $Function | Should -HaveParameter Enable -Type Switch -Mandatory
+        It "Has a mandatory Title parameter" {
+            $Function | Should -HaveParameter "Title" -Type "string" -Mandatory
         }
-    #>
-        It "Does not contain untested parameters" {
-            $ParamInfo = (Get-Command $FunctionName).Parameters
-            $ParamInfo.Count -11 | Should -Be 3
+
+        It "Has a mandatory Frequency parameter" {
+            $Function | Should -HaveParameter "Frequency" -Type "string" -Mandatory
+        }
+
+        It "Has a mandatory RunDate parameter" {
+            $Function | Should -HaveParameter "RunDate" -Type "int" -Mandatory
         }
 
         It "Title parameter is member of correct parametersets" {
@@ -71,39 +73,13 @@ Describe "$ENV:THFunctionName" {
             $ParameterSets.Count | Should -Be 1
         }
 
-        It "Has a mandatory Title parameter" {
-            $ParamInfo = (Get-Command $FunctionName).Parameters["Title"]
-            $ParamInfo | Should -Not -BeNullOrEmpty
-            $ParamInfo.ParameterType.ToString() | Should -Be "System.String"
-            $ParamInfo.Attributes.Mandatory | Should -Be @($true, $true)
-        }
-
-        It "Has a mandatory Frequency parameter" {
-            $ParamInfo = (Get-Command $FunctionName).Parameters["Frequency"]
-            $ParamInfo | Should -Not -BeNullOrEmpty
-            $ParamInfo.ParameterType.ToString() | Should -Be "System.String"
-            $ParamInfo.Attributes.Mandatory | Should -Be $true
-            $ParamInfo.Attributes.ValidValues | Should -Be @(
-                "Daily",
-                "Weekly",
-                "Monthly",
-                "Quarterly",
-                "Half-Yearly",
-                "Yearly"
-            )
-        }
-
-        It "Has a mandatory RunDate parameter" {
-            $ParamInfo = (Get-Command $FunctionName).Parameters["RunDate"]
-            $ParamInfo | Should -Not -BeNullOrEmpty
-            $ParamInfo.ParameterType | Should -Be "int"
-            $ParamInfo.Attributes.Mandatory | Should -Be $true
-        }
     }
 
     Context "Core functionality" {
         BeforeAll {
+            $Title = "Test Title"
             $Date = Get-Date -Format %d
+            $Today = Get-Date
             $Month = Get-Date -Format MMM
             $FullMonth = Get-Date -UFormat %B
             $RunDate = Get-Random -Minimum 1 -Maximum 28
