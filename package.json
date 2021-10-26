@@ -1,6 +1,6 @@
 {
   "name": "adobautaskgen",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A simple module to create opinionated tasks in Azure DevOps",
   "scripts": {
     "prepare": "husky install",

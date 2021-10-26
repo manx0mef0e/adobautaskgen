@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/manx0mef0e/adobautaskgen/compare/v0.0.0...v0.0.1) (2021-10-26)
+
+
+### Features
+
+* add convertfrom-markdowntohtml function ([cf69b59](https://github.com/manx0mef0e/adobautaskgen/commits/cf69b59b3d9c4c2d7243462cec0b467e82de0af2))
+* **private:** add get-fulltitle function ([0f8c214](https://github.com/manx0mef0e/adobautaskgen/commits/0f8c21492a47e44045366b5ef71c28f41f9e7eba))
+* **private:** add get-fulltitle function and test ([3df49a5](https://github.com/manx0mef0e/adobautaskgen/commits/3df49a5122356a098edfb8bd9d0ad60cb6242afc))
+* update add-adobautask ([f5263c9](https://github.com/manx0mef0e/adobautaskgen/commits/f5263c94b9b3c50aa4b2a4e25e3cfc686eb99eb3))
+* update set-adoconnection ([cf80475](https://github.com/manx0mef0e/adobautaskgen/commits/cf804758be41df31f771eeb1d04ed0f7c3da9d9c))
+
 ## 0.0.0 (2021-09-16)
 
 
