@@ -7,3 +7,6 @@ $Result = Invoke-ScriptAnalyzer -Path $ENV:BHPSModulePath -Severity @("Error","W
 if ($Result) {
     $Result | Format-Table
 }
+else {
+    Write-Host "Tests passed"
+}
