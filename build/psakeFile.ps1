@@ -69,6 +69,18 @@ Task BumpVersion -Depends Init {
     $PackageJson = Get-Content -Path $PackageJsonPath | ConvertFrom-Json
     $ProjectVersion = $PackageJson.version
     Update-ModuleManifest -Path $ENV:BHPSModuleManifest -ModuleVersion $ProjectVersion
+
+    $PackageLockJsonPath = Join-Path -Path $ENV:BHProjectPath -ChildPath "package-lock.json"
+    $ChangeLogPath = Join-Path -Path $ENV:BHProjectPath -ChildPath "CHANGELOG.md"
+    git add $PackageJsonPath
+    git add $ENV:BHPSModuleManifest
+    git add $PackageLockJsonPath
+    git add $ChangeLogPath
+
+    $CommitMessage = "chore(release): $ProjectVersion [skip ci]"
+    git commit -m $CommitMessage
+    git tag -a v$ProjectVersion -m $CommitMessage
+
 }
 
 Task CreateExternalHelpFile {}
