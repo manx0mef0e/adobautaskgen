@@ -86,11 +86,15 @@ Task BumpVersion -Depends Init {
 
 }
 
-Task CreateExternalHelpFile -Depends Init {
+Task CreateStagingFolder -Depends Init {
     $Lines
 
-    New-Item -Path $StagingFolder -ItemType Directory -Force
-    New-Item -Path $StagingModulePath -ItemType Directory -Force
+    New-Item -Path $StagingFolder -ItemType Directory -Force | Out-String
+    New-Item -Path $StagingModulePath -ItemType Directory -Force  | Out-String
+}
+
+Task CreateExternalHelpFile -Depends CreateStagingFolder {
+    $Lines
 
     $NewExternalHelpArgs = @{
         Path = Join-Path -Path $ENV:BHProjectPath -ChildPath "docs"
@@ -99,6 +103,29 @@ Task CreateExternalHelpFile -Depends Init {
     New-ExternalHelp @NewExternalHelpArgs
 }
 
-Task CombineFunctions -Depends Init {}
+Task CombineFunctions -Depends CreateStagingFolder {
+    $Lines
+
+    $ClassesFolder = Join-Path -Path $ENV:BHModulePath -ChildPath "Classes" -AdditionalChildPath "*.ps1"
+    $Classes = @(Get-ChildItem -Path $ClassesFolder -ErrorAction SilentlyContinue)
+
+    $PrivateFolder = Join-Path -Path $ENV:BHModulePath -ChildPath "Private" -AdditionalChildPath "*.ps1"
+    $PrivateFuncs = @(Get-ChildItem -Path $PrivateFolder -ErrorAction SilentlyContinue)
+
+    $PublicFolder = Join-Path -Path $ENV:BHModulePath -ChildPath "Public" -AdditionalChildPath "*.ps1"
+    $PublicFuncs= @(Get-ChildItem -Path $PublicFolder -ErrorAction SilentlyContinue)
+
+    $CombinedModulePath = Join-Path -Path $StagingModulePath -ChildPath "$ENV:BHProjectName.psm1"
+
+    if (Test-Path -Path $CombinedModulePath) {
+        Remove-Item $CombinedModulePath
+    }
+
+    foreach ($file in @($Classes + $PrivateFuncs + $PublicFuncs)) {
+        $file | Get-Content | Add-Content -Path $CombinedModulePath
+    }
+
+    Copy-Item -Path $ENV:BHPSModuleManifest -Destination $StagingModulePath -Force
+}
 
 Task Publish -Depends Init {}
