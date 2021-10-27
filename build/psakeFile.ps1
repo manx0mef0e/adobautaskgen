@@ -1,6 +1,9 @@
 Properties {
     $Lines = "----------------------------------------------------------------------"
     $UnitTestsFolder = Join-Path -Path $ENV:BHProjectPath -ChildPath "Tests" -AdditionalChildPath "Unit-Tests"
+    $StagingFolder = Join-Path -Path $ENV:BHProjectPath -ChildPath "staging"
+    $StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $ENV:BHProjectName
+
 }
 
 Task Init {
@@ -83,8 +86,19 @@ Task BumpVersion -Depends Init {
 
 }
 
-Task CreateExternalHelpFile {}
+Task CreateExternalHelpFile -Depends Init {
+    $Lines
 
-Task CombineFunctions {}
+    New-Item -Path $StagingFolder -ItemType Directory -Force
+    New-Item -Path $StagingModulePath -ItemType Directory -Force
 
-Task Publish {}
+    $NewExternalHelpArgs = @{
+        Path = Join-Path -Path $ENV:BHProjectPath -ChildPath "docs"
+        OutputPath = Join-Path -Path $StagingModulePath -ChildPath "en-US"
+    }
+    New-ExternalHelp @NewExternalHelpArgs
+}
+
+Task CombineFunctions -Depends Init {}
+
+Task Publish -Depends Init {}
