@@ -16,6 +16,10 @@ RUN apt-get update \
     && chsh "${USERNAME}" -s "$(which pwsh)" \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
+# Configure ZSH & oh-my-zsh
+COPY other-scripts/.zshrc /home/vscode/
+RUN chsh -s /bin/zsh vscode
+
 # [Optional] Uncomment this section to install additional packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
