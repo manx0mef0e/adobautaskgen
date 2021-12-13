@@ -39,9 +39,5 @@ function Get-FullTitle {
     elseif ($Frequency -eq "Yearly") {
         $CompleteTitle ="$($Today.Year): $Title"
     }
-    else {
-        throw "Cannot create title based on frequency"
-    }
-
     return $CompleteTitle
 }
