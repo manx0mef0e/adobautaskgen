@@ -51,9 +51,22 @@ Describe "ConvertFrom-MarkdownToHtml" {
             $Result = ConvertFrom-MarkdownToHtml -Markdown "**Bold word**"
             $Result | Should -Be "good"
         }
+    }
 
-
-
+    Context "Error Handling" {
+        BeforeAll {
+            Mock Invoke-WebRequest {
+                return @{
+                    StatusCode = 500
+                    Content = "good"
+                }
+            }
+            $Markdown = "**Bold word**"
+        }
+        It "Returns the content supplied" {
+            $Result = ConvertFrom-MarkdownToHtml -Markdown $Markdown
+            $Result | Should -Be $Markdown
+        }
     }
 }
 
