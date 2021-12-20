@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-AdoConnection
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Sets a default project along with account name and personal access token to be used with other calls in the module.
 
 ## SYNTAX
 
@@ -18,16 +18,18 @@ Set-AdoConnection [-Url] <String> [-Project] <String> [-PersonalAccessToken] <St
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+A number of the functions in this module require a project name, account name, and personal access token
+
+By setting these parameters here they can be omitted from function calls and this default will be used instead.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Set-AdoConnection -Url "vbl-core.visualstudio.com" -Project "IT-Operations" -PersonalAccessToken 4vq95A6CjvjQI8DbmRif
 ```
 
-{{ Add example description here }}
+Stores the Azure DevOps account url, project name, and PAT ready for calls within the module.
 
 ## PARAMETERS
 
@@ -47,7 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -PersonalAccessToken
-{{ Fill PersonalAccessToken Description }}
+The personal access token from ADO to use to access this account.
 
 ```yaml
 Type: String
@@ -62,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -Project
-{{ Fill Project Description }}
+Specifies the team project for which this function operates.
 
 ```yaml
 Type: String
@@ -77,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-{{ Fill Url Description }}
+Specifies the URL of the Azure DevOps account to use.
 
 ```yaml
 Type: String

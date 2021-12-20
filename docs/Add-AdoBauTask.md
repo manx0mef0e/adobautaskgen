@@ -8,7 +8,7 @@ schema: 2.0.0
 # Add-AdoBauTask
 
 ## SYNOPSIS
-Adds task to Azure DevOps PBI.
+Adds a task to an Azure DevOps PBI.
 
 ## SYNTAX
 
@@ -29,15 +29,22 @@ Creates a task on the specified PBI with a title based on frequency or run date,
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Add-AdoBauTask -Title "Server Capacity Daily Check" -Description "Carry out server capacity checks" -ParentId 51823 -Frequency "Daily"
 ```
 
-{{ Add example description here }}
+This command adds a daily task called "{DayOfWeek}: Server Capacity Daily Check" to the Parent PBI 51823.
+
+### Example 2
+```powershell
+PS C:\> Add-AdoBauTask -Title "Tape Media housekeeping & restores" -Description "Carry out tape library maintenance" -ParentId 51823 -Specific 21
+```
+
+This command adds a monthly task called "21 {Month}: Tape Media housekeeping & restores" to the Parent PBI 51823.
 
 ## PARAMETERS
 
 ### -Description
-{{ Fill Description Description }}
+Specifies the description field within the task.
 
 ```yaml
 Type: String
@@ -52,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -Frequency
-{{ Fill Frequency Description }}
+Specifies the frequency on which the task will be generated.
 
 ```yaml
 Type: String
@@ -68,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -ParentId
-{{ Fill ParentId Description }}
+Specifies the PBI number to which the task will be added as a child of.
 
 ```yaml
 Type: Int32
@@ -83,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -RunDate
-{{ Fill RunDate Description }}
+Specifies the Day of the month on which the task will be generated.
 
 ```yaml
 Type: Int32
@@ -98,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-{{ Fill Title Description }}
+Specifies the Title for the created task.
 
 ```yaml
 Type: String
