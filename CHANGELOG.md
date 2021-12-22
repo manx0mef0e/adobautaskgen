@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/manx0mef0e/adobautaskgen/compare/v0.0.1...v0.0.2) (2021-12-22)
+
+
+### Bug Fixes
+
+* remove untestable else condition ([876cbcd](https://github.com/manx0mef0e/adobautaskgen/commits/876cbcda98abc3321b14bba229379005bbb4c9ca))
+
 ### [0.0.1](https://github.com/manx0mef0e/adobautaskgen/compare/v0.0.0...v0.0.1) (2021-10-26)
 
 
