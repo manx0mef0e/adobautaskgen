@@ -3,7 +3,6 @@ Properties {
     $UnitTestsFolder = Join-Path -Path $ENV:BHProjectPath -ChildPath "Tests" -AdditionalChildPath "Unit-Tests"
     $StagingFolder = Join-Path -Path $ENV:BHProjectPath -ChildPath "staging"
     $StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $ENV:BHProjectName
-
 }
 
 Task Init {
@@ -128,4 +127,15 @@ Task CombineFunctions -Depends CreateStagingFolder {
     Copy-Item -Path $ENV:BHPSModuleManifest -Destination $StagingModulePath -Force
 }
 
-Task Publish -Depends Init {}
+Task Publish -Depends Init {
+    $Lines
+
+    $ENV:StagingModulePath = $StagingModulePath
+
+    $InvokePSDeployArgs = @{
+        Path = Join-Path -Path $ENV:BHProjectPath -ChildPath "build"
+        Force = $true
+        Recurse = $true
+    }
+    Invoke-PSDeploy @InvokePSDeployArgs -Verbose
+}
