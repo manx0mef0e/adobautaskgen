@@ -63,8 +63,8 @@ Task BumpVersion -Depends Init {
     $Lines
 
     npm install -g standard-version
-    git config --global user.email "build@fakeemail.com"
-    git config --global user.name "buildbot"
+    git config --global user.email "$ENV:gitUserEmail"
+    git config --global user.name "$ENV:gitUserName"
     standard-version
 
     $PackageJsonPath = Join-Path -Path $ENV:BHProjectPath -ChildPath "package.json"
@@ -137,5 +137,5 @@ Task Publish -Depends Init {
         Force = $true
         Recurse = $true
     }
-    Invoke-PSDeploy @InvokePSDeployArgs -Verbose
+    Invoke-PSDeploy @InvokePSDeployArgs
 }

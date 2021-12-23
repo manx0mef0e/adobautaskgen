@@ -7,7 +7,8 @@
     {"type": "style", "hidden": true},
     {"type": "refactor", "hidden": true},
     {"type": "perf", "hidden": true},
-    {"type": "test", "hidden": true}
+    {"type": "test", "hidden": true},
+    {"type": "ci", "hidden": true}
   ],
   "commitUrlFormat": "https://github.com/manx0mef0e/adobautaskgen/commits/{{hash}}",
   "compareUrlFormat": "https://github.com/manx0mef0e/adobautaskgen/compare/{{previousTag}}...{{currentTag}}"
