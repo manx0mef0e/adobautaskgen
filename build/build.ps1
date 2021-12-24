@@ -5,6 +5,7 @@ param (
     $ResolveDependency,
 
     [Parameter(Mandatory = $true)]
+    [ValidateSet("Init","UnitTests","BumpVersion","CreateStagingFolder","CreateExternalHelpFile","CombineFunctions","Publish")]
     [string]
     $Task
 )
