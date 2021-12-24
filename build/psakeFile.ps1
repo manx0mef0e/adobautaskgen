@@ -147,6 +147,4 @@ Task Publish -Depends Init {
         Recurse = $true
     }
     Invoke-PSDeploy @InvokePSDeployArgs
-
-    Remove-Module -Name PSDeploy
 }
