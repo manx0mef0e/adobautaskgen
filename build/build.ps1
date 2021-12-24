@@ -28,8 +28,8 @@ if ($ResolveDependency.IsPresent) {
 
     Write-Host "`n  Resolving dependancies from $ModuleDependsFilePath"
     $InvokePSDependArgs = @{
-        Path = $ModuleDependsFilePath
-        Import = $true
+        Path    = $ModuleDependsFilePath
+        Import  = $false
         Install = $true
         Confirm = $false
     }
@@ -38,13 +38,15 @@ if ($ResolveDependency.IsPresent) {
 }
 
 Write-Host "`nSTARTED TASK: Set build variables"
+Import-Module -Name BuildHelpers
 Set-BuildEnvironment -Force
 
 Write-Host "`nSTARTED TASK: $Task"
+Import-Module psake
 $InvokePsakeArgs = @{
     buildFile = Join-Path $PSScriptRoot -ChildPath "psakeFile.ps1"
-    nologo = $true
-    tasklist = $Task
+    nologo    = $true
+    tasklist  = $Task
 }
 Invoke-Psake @InvokePsakeArgs
 

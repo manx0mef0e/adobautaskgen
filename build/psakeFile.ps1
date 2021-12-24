@@ -16,26 +16,28 @@ Task Init {
 Task UnitTests -Depends Init {
     $Lines
 
+    Import-Module -Name Pester
+
     $Config = [PesterConfiguration]@{
-        Run = @{
-            Path = $UnitTestsFolder
+        Run          = @{
+            Path     = $UnitTestsFolder
             PassThru = $true
         }
         CodeCoverage = @{
-            Enabled = $true
+            Enabled      = $true
             OutputFormat = "JaCoCo"
-            OutputPath = Join-Path -Path $ENV:BHProjectPath -ChildPath "TestResults" -AdditionalChildPath "codeCoverage.xml"
-            Path = @(
+            OutputPath   = Join-Path -Path $ENV:BHProjectPath -ChildPath "TestResults" -AdditionalChildPath "codeCoverage.xml"
+            Path         = @(
                 (Join-Path -Path $ENV:BHModulePath -ChildPath Private)
                 (Join-Path -Path $ENV:BHModulePath -ChildPath Public)
             )
         }
-        TestResult = @{
-            Enabled = $true
+        TestResult   = @{
+            Enabled      = $true
             OutputFormat = "JUnitXml"
-            OutputPath = Join-Path -Path $ENV:BHProjectPath -ChildPath "TestResults" -AdditionalChildPath "pesterTests.xml"
+            OutputPath   = Join-Path -Path $ENV:BHProjectPath -ChildPath "TestResults" -AdditionalChildPath "pesterTests.xml"
         }
-        Output = @{
+        Output       = @{
             Verbosity = "Detailed"
         }
     }
@@ -57,6 +59,7 @@ Task UnitTests -Depends Init {
         exit 1
     }
 
+    Remove-Module -Name Pester
 }
 
 Task BumpVersion -Depends Init {
@@ -95,11 +98,15 @@ Task CreateStagingFolder -Depends Init {
 Task CreateExternalHelpFile -Depends CreateStagingFolder {
     $Lines
 
+    Import-Module -Name platyPS
+
     $NewExternalHelpArgs = @{
-        Path = Join-Path -Path $ENV:BHProjectPath -ChildPath "docs"
+        Path       = Join-Path -Path $ENV:BHProjectPath -ChildPath "docs"
         OutputPath = Join-Path -Path $StagingModulePath -ChildPath "en-US"
     }
     New-ExternalHelp @NewExternalHelpArgs
+
+    Remove-Module -Name platyPS
 }
 
 Task CombineFunctions -Depends CreateStagingFolder {
@@ -112,7 +119,7 @@ Task CombineFunctions -Depends CreateStagingFolder {
     $PrivateFuncs = @(Get-ChildItem -Path $PrivateFolder -ErrorAction SilentlyContinue)
 
     $PublicFolder = Join-Path -Path $ENV:BHModulePath -ChildPath "Public" -AdditionalChildPath "*.ps1"
-    $PublicFuncs= @(Get-ChildItem -Path $PublicFolder -ErrorAction SilentlyContinue)
+    $PublicFuncs = @(Get-ChildItem -Path $PublicFolder -ErrorAction SilentlyContinue)
 
     $CombinedModulePath = Join-Path -Path $StagingModulePath -ChildPath "$ENV:BHProjectName.psm1"
 
@@ -130,12 +137,16 @@ Task CombineFunctions -Depends CreateStagingFolder {
 Task Publish -Depends Init {
     $Lines
 
+    Import-Module -Name PSDeploy
+
     $ENV:StagingModulePath = $StagingModulePath
 
     $InvokePSDeployArgs = @{
-        Path = Join-Path -Path $ENV:BHProjectPath -ChildPath "build"
-        Force = $true
+        Path    = Join-Path -Path $ENV:BHProjectPath -ChildPath "build"
+        Force   = $true
         Recurse = $true
     }
     Invoke-PSDeploy @InvokePSDeployArgs
+
+    Remove-Module -Name PSDeploy
 }
