@@ -85,6 +85,7 @@ Task BumpVersion -Depends Init {
     $CommitMessage = "chore(release): $ProjectVersion [skip ci]"
     git commit -m $CommitMessage
     git tag -a v$ProjectVersion -m $CommitMessage
+    git push --follow-tags
 
 }
 

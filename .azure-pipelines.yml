@@ -6,15 +6,27 @@ trigger:
 
 variables:
   - template: "build/pipeline-variables.yml"
+  - group: "SSH for GitHub"
 
 pool:
   vmImage: $(vmImageName)
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  #Static code and Unit tests
+  #Build
+  - stage: "build"
+    displayName: "Build"
+    # dependsOn: "tests"
+    jobs:
+      - job: "bumpVersion"
+        displayName: "Bump Version"
+        continueOnError: false
+        steps:
+          - task: InstallSSHKey@0
+            displayname: "Install SSH Key"
+            inputs:
+              knownHostEntry: "$(gitSshKnownHosts)"
+              sshPublicKey: "$(gitSshPublicKey)"
+              sshKeySecureFile: "$(sshKeySecureFile)"
+  #Deploy
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
