@@ -27,6 +27,6 @@ stages:
             inputs:
               knownHostEntry: "$(gitSshKnownHosts)"
               sshPublicKey: "$(gitSshPublicKey)"
-              sshKeySecureFile: "$(sshKeySecureFile)"
+              sshKeySecureFile: "sshKeySecureFile"
   #Deploy
 
