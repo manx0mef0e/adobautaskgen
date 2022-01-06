@@ -23,7 +23,7 @@ stages:
         continueOnError: false
         steps:
           - task: InstallSSHKey@0
-            displayname: "Install SSH Key"
+            displayName: "Install SSH Key"
             inputs:
               knownHostEntry: "$(gitSshKnownHosts)"
               sshPublicKey: "$(gitSshPublicKey)"
