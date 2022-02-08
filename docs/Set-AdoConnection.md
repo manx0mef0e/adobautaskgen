@@ -12,7 +12,7 @@ Sets a default project along with account name and personal access token to be u
 
 ## SYNTAX
 
-```
+```powershell
 Set-AdoConnection [-Url] <String> [-Project] <String> [-PersonalAccessToken] <String> [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -26,7 +26,7 @@ By setting these parameters here they can be omitted from function calls and thi
 
 ### Example 1
 ```powershell
-PS C:\> Set-AdoConnection -Url "vbl-core.visualstudio.com" -Project "IT-Operations" -PersonalAccessToken 4vq95A6CjvjQI8DbmRif
+PS C:\> Set-AdoConnection -Url "vbl-core.visualstudio.com" -Project "IT-Operations" -PersonalAccessToken YOUR_PERSONAL_ACCESS_TOKEN
 ```
 
 Stores the Azure DevOps account url, project name, and PAT ready for calls within the module.

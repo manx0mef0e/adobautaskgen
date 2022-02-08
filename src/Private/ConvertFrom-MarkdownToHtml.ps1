@@ -1,4 +1,5 @@
 function ConvertFrom-MarkdownToHtml {
+    [OutputType("System.String")]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]

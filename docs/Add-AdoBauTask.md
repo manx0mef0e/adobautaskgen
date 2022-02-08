@@ -13,12 +13,12 @@ Adds a task to an Azure DevOps PBI.
 ## SYNTAX
 
 ### Frequency (Default)
-```
+```powershell
 Add-AdoBauTask -Title <String> -Description <String> -ParentId <Int32> -Frequency <String> [<CommonParameters>]
 ```
 
 ### Specific
-```
+```powershell
 Add-AdoBauTask -Title <String> -Description <String> -ParentId <Int32> -RunDate <Int32> [<CommonParameters>]
 ```
 

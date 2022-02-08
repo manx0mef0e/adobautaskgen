@@ -14,9 +14,12 @@
         "**/.vscode/**",
         "**/node_modules/**",
         "**/vscode-extension/**",
+        "CHANGELOG.md",
         "package-lock.json"
     ],
     "words": [
-        "adobautaskgen"
+        "adobautaskgen",
+        "Barkes",
+        "pwsh"
     ]
 }

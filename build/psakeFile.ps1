@@ -12,7 +12,7 @@ Task Init {
     Write-Host "Build system details"
     Get-Item ENV:BH*
 }
-
+# TODO: Linting
 Task UnitTests -Depends Init {
     $Lines
 

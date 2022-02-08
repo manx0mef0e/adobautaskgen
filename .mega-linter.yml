@@ -1,0 +1,13 @@
+DEFAULT_BRANCH: main
+EXCLUDED_DIRECTORIES:
+  - ".devcontainer"
+  - ".git"
+  - ".husky"
+  - "build"
+  - "Helpers"
+  - "Tests"
+  - "Tools"
+  - "utils"
+IGNORE_GITIGNORED_FILES: true
+MARKDOWN_FILTER_REGEX_EXCLUDE: "CHANGELOG\\.md" # Additional escape characters required due to JSON transformation.
+EDITORCONFIG_EDITORCONFIG_CHECKER_FILTER_REGEX_EXCLUDE: "CHANGELOG\\.md" # Additional escape characters required due to JSON transformation.

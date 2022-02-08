@@ -14,6 +14,8 @@ function Set-AdoConnection {
         $PersonalAccessToken
     )
 
-    Set-VSTeamAccount -Account $Url -PersonalAccessToken $PersonalAccessToken
-    Set-VSTeamDefaultProject -Project $Project
+    if ($PSCmdlet.ShouldProcess("ShouldProcess?")) {
+        Set-VSTeamAccount -Account $Url -PersonalAccessToken $PersonalAccessToken
+        Set-VSTeamDefaultProject -Project $Project
+    }
 }
