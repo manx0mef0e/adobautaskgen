@@ -44,9 +44,10 @@ stages:
                 OUTPUT_BASE_NAME=$(sed "s/.tap/.xml/g" <<<"$INPUT_FILE")
                 OUTPUT_FILE=$JUNIT_DIR/$OUTPUT_BASE_NAME
                 sudo sed -i "s/message: \*\+/message: /g" ${report}
-                sudo sed -i -E "s/(^|[ ]+)(#)[a-zA-Z]*/\1\/\//g* ${report}
+                sudo sed -i -E "s/(^|[ ]+)(#)[a-zA-Z]*/\1\/\//g" ${report}
                 cat ${report} | tap-junit -p -s "mega-linter" > $OUTPUT_FILE
                 sudo sed -i 's/\\n/\n/g' $OUTPUT_FILE
+                sudo sed -i 's/\x1b\[[0-9;]*m//g' $OUTPUT_FILE'
               done
             displayName: "convert reports to Junit"
             condition: succeededOrFailed()
