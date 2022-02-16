@@ -19,6 +19,37 @@ stages:
       - job: linting
         displayName: "Linting"
         steps:
+          - script: |
+              docker pull megalinter/megalinter-dotnet:v5
+            displayName: "pull mega-linter image"
+          - script: |
+              docker run \
+              -e ENABLE_LINTERS=,MARKDOWN_MARKDOWNLINT,SPELL_MISSPELL,MARKDOWN_MARKDOWN_TABLE_FORMATTER,MARKDOWN_MARKDOWN_LINK_CHECK,CREDENTIALS_SECRETLINT,YAML_YAMLLINT,SPELL_CSPELL,EDITORCONFIG_EDITORCONFIG_CHECKER,POWERSHELL_POWERSHELL \
+              -e OUTPUT_FORMAT=tap \
+              -e OUTPUT_DETAIL=detailed \
+              --name AdoBauTaskGenLinter \
+              -v $(System.DefaultWorkingDirectory):/tmp/lint \
+              megalinter/megalinter-dotnet:v5
+            displayName: "run mega-linter image"
+          - script: |
+              npm install -g tap-junit@5.0.1
+
+              TAP_DIR=$(System.DefaultWorkingDirectory)/report/tap
+              JUNIT_DIR=$(System.DefaultWorkingDirectory)/junit
+              mkdir -pv $JUNIT_DIR
+              cd $TAP_DIR
+
+              for report in $TAP_DIR/*; do
+                INPUT_FILE=$(basename ${report})
+                OUTPUT_BASE_NAME=$(sed "s/.tap/.xml/g" <<<"$INPUT_FILE")
+                OUTPUT_FILE=$JUNIT_DIR/$OUTPUT_BASE_NAME
+                sudo sed -i "s/message: \*\+/message: /g" ${report}
+                sudo sed -i -E "s/(^|[ ]+)(#)[a-zA-Z]*/\1\/\//g* ${report}
+                cat ${report} | tap-junit -p -s "mega-linter" > $OUTPUT_FILE
+                sudo sed -i 's/\\n/\n/g' $OUTPUT_FILE
+              done
+            displayName: "convert reports to Junit"
+            condition: succeededOrFailed()
 
       - job: "unitTests"
         displayName: "Unit Tests"
