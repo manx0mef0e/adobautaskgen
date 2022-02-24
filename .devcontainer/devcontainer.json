@@ -3,6 +3,9 @@
 {
 	"name": "PowerShell",
 	"dockerFile": "Dockerfile",
+    "runArgs": ["--init", "--privileged"],
+	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+	"overrideCommand": false,
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
@@ -11,6 +14,7 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+        "ms-azuretools.vscode-docker",
 		"ms-vscode.powershell",
 		"aaron-bond.better-comments",
 		"coenraads.bracket-pair-colorizer-2",
