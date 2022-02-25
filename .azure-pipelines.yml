@@ -19,6 +19,9 @@ stages:
         displayName: "Linting"
         steps:
           - script: |
+              echo "THE USER IS"
+              echo $USER
+          - script: |
               docker pull megalinter/megalinter-dotnet:v5
             displayName: "pull mega-linter image"
           - script: |
